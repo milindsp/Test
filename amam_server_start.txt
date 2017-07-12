@@ -1,0 +1,27 @@
+ctrl+alt+t
+cd amam
+rails s
+
+in New tab
+
+rake sunspot:solr:start 
+
+bin/delayed_job  --pool=user_index:1 --pool=*:2 --pool=indexing:3 --pool=report:1 --pool=order_fulfillment:1 start
+
+in new tab
+
+rake workers:killall
+
+
+redis-server 
+
+nohup rake resque:work  TERM_CHILD=1 QUEUE=* &
+nohup rake resque:work  TERM_CHILD=1 QUEUE="part_files_queue" &
+nohup rake resque:work  TERM_CHILD=1 QUEUE="bulk_indexing_queue" &
+nohup rake resque:work  TERM_CHILD=1 QUEUE="bulk_edit_queue" &
+nohup rake resque:work  TERM_CHILD=1 QUEUE="rfq_mailing" &
+
+
+
+Part.last(800).index
+Part.last.index!
